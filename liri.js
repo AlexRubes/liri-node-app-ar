@@ -47,21 +47,23 @@ function getJam(params) {
         else {
             var songInfo = data.tracks.items[0];
             var songResult =
-            console.log("Artist: " + songInfo.artists[0].name)
-            console.log("Song Name: " + songInfo.name)
-            console.log("Preview Link: " + songInfo.preview_url)
-            console.log("Album: " + songInfo.album.name);
-
+            "-------------------------------------------------------------------" + "\r\n" +
+            "Artist: " + songInfo.artists[0].name + "\r\n" +
+            "Song Name: " + songInfo.name + "\r\n" +
+            "Preview Link: " + songInfo.preview_url + "\r\n" +
+            "Album: " + songInfo.album.name + "\r\n" +
+            "-------------------------------------------------------------------" + "\r\n";
+            console.log(songResult);
             log(songResult);
         }
     });
 
 };
 
-var getFlicks = function () {
+function getFlicks(movieName) {
 
     // Grab or assemble the movie name and store it in a variable called "movieName"
-    var movieName = process.argv.slice(3).join(" ");
+    
 
     if (!movieName) {
         movieName = "mr nobody";
@@ -82,21 +84,23 @@ var getFlicks = function () {
 
             // Parse the body of the site and recover just the imdbRating
             var movieResults =
-                console.log("Movie Title: " + JSON.parse(body).Title);
-            console.log("Release Year: " + JSON.parse(body).Year);
-            console.log("IMBD Rating: " + JSON.parse(body).imdbRating);
-            console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
-            console.log("Country: " + JSON.parse(body).Country);
-            console.log("Language: " + JSON.parse(body).Language);
-            console.log("Plot: " + JSON.parse(body).Plot);
-            console.log("Actors: " + JSON.parse(body).Actors);
-
+            "-------------------------------------------------------------------" + "\r\n" +
+            "Movie Title: " + JSON.parse(body).Title + "\r\n" +
+            "Release Year: " + JSON.parse(body).Year + "\r\n" +
+            "IMBD Rating: " + JSON.parse(body).imdbRating + "\r\n" +
+            "Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value + "\r\n" +
+            "Country: " + JSON.parse(body).Country + "\r\n" +
+            "Language: " + JSON.parse(body).Language + "\r\n" +
+            "Plot: " + JSON.parse(body).Plot + "\r\n" +
+            "Actors: " + JSON.parse(body).Actors + "\r\n" +
+            "-------------------------------------------------------------------" + "\r\n";
+            console.log(movieResults);
             log(movieResults);
         }
     });
 };
 
-var getData = function () {
+function getData() {
     fs.readFile("random.txt", "utf8", function (error, data) {
 
         if (!error) {
@@ -114,12 +118,11 @@ var getData = function () {
 };
 
 function log(logResults) {
-    fs.appendFile("log.txt", logResults, (error) => {
-        if (error) {
-            throw error;
-        }
-    });
-};
+    fs.appendFile("log.txt", logResults, function (err) {
+        if (err) throw err;
+        console.log('Saved!');
+      });
+  };
 
 //create events
 var userInput = process.argv[2];
@@ -132,7 +135,8 @@ if (userInput === 'spotify-this-song') {
     getJam(songInputOne);
 }
 if (userInput === 'movie-this') {
-    getFlicks();
+    let movieTitle = process.argv.slice(3).join(" ");
+    getFlicks(movieTitle);
 }
 if (userInput === 'do-what-it-says') {
     getData();
