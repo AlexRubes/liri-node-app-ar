@@ -18,11 +18,11 @@ var getTweets = function () {
     client.get('statuses/user_timeline', handle, function (error, tweets, response) {
         if (!error) {
             for (i = 0; i < tweets.length; i++) {
-                var tweets = 
-                console.log(tweets[i].text);
+                var tweetsData =
+                console.log(tweets[i].text)
                 console.log(tweets[i].created_at);
 
-                log(tweets);
+                log(tweetsData);
             }
         }
     });
@@ -30,15 +30,13 @@ var getTweets = function () {
 
 
 
-var getJam = function (params) {
+function getJam(params) {
+
     var spotify = new Spotify(keys.spotify);
-
-    var params = process.argv.slice(3).join(" ");
-
 
     if (!params) {
         params = 'Levels'
-        console.log(params);
+
     }
 
     spotify.search({ type: 'track', query: params }, function (err, data) {
@@ -83,8 +81,8 @@ var getFlicks = function () {
         if (!error && response.statusCode === 200) {
 
             // Parse the body of the site and recover just the imdbRating
-            var movieResults = 
-            console.log("Movie Title: " + JSON.parse(body).Title);
+            var movieResults =
+                console.log("Movie Title: " + JSON.parse(body).Title);
             console.log("Release Year: " + JSON.parse(body).Year);
             console.log("IMBD Rating: " + JSON.parse(body).imdbRating);
             console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
@@ -104,7 +102,9 @@ var getData = function () {
         if (!error) {
             // Then split it by commas (to make it more readable)
             var dataArr = data.split(",");
-            getJam(dataArr[0],dataArr[1]);
+            console.log(dataArr[0]);
+            getJam(dataArr[1]);
+            //getJam(dataArr[0], dataArr[1]);
         } else {
             // If the code experiences any errors it will log the error to the console.
             console.log("Error occurred:" + error);
@@ -128,7 +128,8 @@ if (userInput === 'my-tweets') {
     getTweets();
 }
 if (userInput === 'spotify-this-song') {
-    getJam();
+    let songInputOne = process.argv.slice(3).join(" ");
+    getJam(songInputOne);
 }
 if (userInput === 'movie-this') {
     getFlicks();
